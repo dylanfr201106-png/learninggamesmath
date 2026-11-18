@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>StreamNest — Your video space</title>
+<style>
+:root{color-scheme:dark;--bg:#0a1020;--surface:#121b30;--surface2:#192541;--line:#2a3857;--text:#f4f7ff;--muted:#a7b4cf;--accent:#8ba6ff;--accent2:#b6c6ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,Segoe UI,Arial,sans-serif}button,input{font:inherit}button{cursor:pointer;color:inherit;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 13px;font-weight:650}button:hover{border-color:var(--accent)}button.primary{background:var(--accent);border-color:var(--accent);color:#0a1330}button.ghost{background:transparent}input{background:#0b1428;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;width:100%;outline:none}input:focus{border-color:var(--accent)}a{color:var(--accent2)}
+.topbar{min-height:70px;display:flex;align-items:center;gap:18px;padding:10px 24px;border-bottom:1px solid var(--line);background:#0c1427;position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:10px;min-width:205px;font-size:21px;font-weight:850}.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#a7bcff,#6b82e8);display:grid;place-items:center;color:#0a1430;font-weight:950}.top-search{display:flex;gap:8px;max-width:680px;width:100%;margin:auto}.top-search input{border-radius:22px;padding-left:18px}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1500px;margin:auto}.sidebar{padding:22px 14px;border-right:1px solid var(--line);min-height:calc(100vh - 70px);position:sticky;top:70px;height:calc(100vh - 70px)}.nav{display:grid;gap:7px}.nav button{text-align:left;background:transparent;border-color:transparent;font-weight:600}.nav button.active,.nav button:hover{background:var(--surface2);border-color:var(--line)}.side-label{color:#7888a8;font-size:11px;font-weight:800;letter-spacing:1.3px;margin:23px 10px 8px}.main{padding:28px clamp(16px,3vw,42px) 60px;min-width:0}.view{display:none}.view.active{display:block}.eyebrow{color:var(--accent2);font-weight:750;font-size:12px;letter-spacing:1.3px;text-transform:uppercase}h1{font-size:clamp(27px,4vw,38px);line-height:1.15;margin:7px 0 9px}h2{font-size:22px;margin:0 0 7px}.muted,.sub{color:var(--muted)}.sub{margin:0 0 23px}.hero{padding:28px;border:1px solid #35466b;border-radius:20px;background:radial-gradient(ellipse at 85% 20%,#304477 0,transparent 40%),linear-gradient(115deg,#1a2a4d,#121c32);margin-bottom:28px}.hero p{max-width:650px;color:#c4d0e8;margin:0 0 18px}.hero-actions,.formrow{display:flex;gap:9px;flex-wrap:wrap}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:25px 0 13px}.section-head p{margin:0;color:var(--muted);font-size:13px}.quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.quick{padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--surface);text-align:left;min-height:112px}.quick .emoji{font-size:23px;display:block;margin-bottom:8px}.quick strong{display:block}.quick small{color:var(--muted)}.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}.formrow input{flex:1;min-width:220px}.status{min-height:22px;margin-top:9px;color:var(--muted);font-size:13px}.player{width:100%;aspect-ratio:16/9;background:#030711;border-radius:13px;overflow:hidden;margin-top:16px}.player iframe{width:100%;height:100%;border:0}.hidden{display:none!important}.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:15px}.video-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}.thumb{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#24375d,#111a2c);display:grid;place-items:center;color:#91a4cb;font-size:32px;object-fit:cover}.video-info{padding:12px}.video-title{font-weight:750;line-height:1.35;min-height:43px}.video-channel{font-size:12px;color:var(--muted);margin:6px 0 10px}.card-actions{display:flex;gap:7px;flex-wrap:wrap}.card-actions button{font-size:12px;padding:7px 9px}.empty{padding:30px 18px;text-align:center;border:1px dashed #3a4b6c;border-radius:14px;color:var(--muted)}.field label{display:block;margin:0 0 7px;color:#d4def2;font-size:13px}.note{font-size:12px;color:var(--muted);line-height:1.55}footer{border-top:1px solid var(--line);padding:22px 0;color:#8190ad;font-size:12px;margin-top:35px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{position:static;height:auto;min-height:0;border-right:0;border-bottom:1px solid var(--line);padding:9px 14px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap}.side-label{display:none}.quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.topbar{flex-wrap:wrap;padding:10px 13px}.brand{min-width:auto}.brand span:last-child{display:none}.top-search{order:3;max-width:none}.layout{display:block}.main{padding:20px 13px 45px}.hero{padding:20px}.quick-grid{gap:8px}.quick{padding:12px}.card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.video-info{padding:9px}.video-title{font-size:13px}}
+</style></head>
+<body>
+<header class="topbar">
+ <div class="brand"><div class="logo">S</div><span>StreamNest</span></div>
+ <form class="top-search" id="globalSearch"><input id="globalQuery" placeholder="Search YouTube videos…" aria-label="Search YouTube"><button class="primary">Search</button></form>
+ <button class="ghost" data-view="saved">♡ Saved</button><button class="ghost" data-view="settings">⚙</button>
+</header>
+<div class="layout">
+<aside class="sidebar"><nav class="nav">
+<button class="active" data-view="home">⌂　Home</button><button data-view="watch">▶　Watch a link</button><button data-view="search">⌕　Search</button><button data-view="playlist">▤　Playlists</button><button data-view="saved">♡　Saved videos</button><button data-view="history">◷　History</button>
+</nav><div class="side-label">YOUR SPACE</div><nav class="nav"><button data-view="settings">⚙　Settings & help</button></nav></aside>
+<main class="main">
+<section id="home" class="view active"><div class="hero"><div class="eyebrow">Your video space</div><h1>Discover. Watch. Keep.</h1><p>Search YouTube, open videos in a custom player, organize favorites and revisit your watch history.</p><div class="hero-actions"><button class="primary" data-view="search">Explore videos</button><button data-view="watch">Paste a video link</button></div></div>
+<div class="section-head"><div><h2>Explore topics</h2><p>Choose a topic to search YouTube.</p></div></div><div class="quick-grid">
+<button class="quick" data-topic="gaming"><span class="emoji">🎮</span><strong>Gaming</strong><small>Games, guides and playthroughs</small></button>
+<button class="quick" data-topic="science and space"><span class="emoji">🚀</span><strong>Science & space</strong><small>Discover how things work</small></button>
+<button class="quick" data-topic="economics and business"><span class="emoji">📈</span><strong>Economics</strong><small>Markets, money and business</small></button>
+<button class="quick" data-topic="history documentaries"><span class="emoji">🏛️</span><strong>History</strong><small>Events and documentaries</small></button>
+<button class="quick" data-topic="technology and artificial intelligence"><span class="emoji">🤖</span><strong>Technology</strong><small>AI, computers and inventions</small></button>
+<button class="quick" data-topic="engineering megaprojects"><span class="emoji">🏗️</span><strong>Mega-projects</strong><small>Engineering on a huge scale</small></button>
+<button class="quick" data-topic="nature wildlife"><span class="emoji">🌎</span><strong>Nature</strong><small>Wildlife and the planet</small></button>
+<button class="quick" data-topic="music"><span class="emoji">🎵</span><strong>Music</strong><small>Find music videos</small></button></div>
+<div class="section-head"><div><h2>Recently watched</h2><p>Stored in this browser only.</p></div><button data-view="history">View all</button></div><div id="homeHistory" class="card-grid"></div></section>
+
+<section id="watch" class="view"><div class="eyebrow">Video player</div><h1>Watch a video</h1><p class="sub">Paste a YouTube URL or 11-character video ID. No API key required.</p><div class="panel"><label for="videoUrl">YouTube video link</label><div class="formrow"><input id="videoUrl" placeholder="https://www.youtube.com/watch?v=…"><button class="primary" id="playLink">Watch video</button></div><div id="watchStatus" class="status">Copy a video link using YouTube's Share button, then paste it here.</div><div id="mainPlayer" class="player"><div style="padding:22px;color:#a7b4cf">Your selected video appears here.</div></div><p id="openYoutube" class="note hidden"><a id="openYoutubeLink" target="_blank" rel="noopener">Open this video on YouTube ↗</a></p></div></section>
+
+<section id="search" class="view"><div class="eyebrow">YouTube discovery</div><h1>Search videos</h1><p class="sub">Search for videos inside StreamNest without a Google API key.</p><div class="panel"><div class="formrow"><input id="searchQuery" placeholder="Search anything on YouTube…"><button class="primary" id="doSearch">Search YouTube</button></div><div class="status" id="searchStatus">No Google API key needed. Results appear here when a public search server is reachable.</div><div id="searchResults" class="card-grid"></div></div></section>
+
+<section id="playlist" class="view"><div class="eyebrow">Queue up</div><h1>Playlists</h1><p class="sub">Play a YouTube playlist in the embedded player.</p><div class="panel"><label for="playlistUrl">YouTube playlist URL or ID</label><div class="formrow"><input id="playlistUrl" placeholder="https://www.youtube.com/playlist?list=…"><button class="primary" id="playPlaylist">Load playlist</button></div><div class="status" id="playlistStatus"></div><div id="playlistPlayer" class="player"><div style="padding:22px;color:#a7b4cf">Your playlist appears here.</div></div></div></section>
+
+<section id="saved" class="view"><div class="eyebrow">Your collection</div><h1>Saved videos</h1><p class="sub">Saved items stay in this browser.</p><div id="savedGrid" class="card-grid"></div></section>
+<section id="history" class="view"><div class="eyebrow">Recently played</div><h1>Watch history</h1><p class="sub">Recent videos played here.</p><button id="clearHistory">Clear history</button><div id="historyGrid" class="card-grid" style="margin-top:14px"></div></section>
+<section id="settings" class="view"><div class="eyebrow">Personalize</div><h1>Settings & help</h1><div class="panel"><h2>Search options</h2><p class="muted">StreamNest now searches through community-run Invidious servers. No Google API key is needed. These public servers can be slow, unavailable, or block requests from some browsers, so search is best-effort.</p><p class="note">Search provider information: <a href="https://docs.invidious.io/instances/" target="_blank" rel="noopener">official public instance list</a> · <a href="https://docs.invidious.io/api/" target="_blank" rel="noopener">API documentation</a>.</p><button id="retrySettings" class="primary">Test search connection</button><p id="providerStatus" class="status"></p></div><div class="panel"><h2>Why might a video not play?</h2><p class="muted">YouTube's official embedded player streams the video. Some videos cannot be embedded because of creator settings, privacy, age, regional or other restrictions. Use the Open on YouTube link for those videos. StreamNest does not download, rehost, scrape or bypass restrictions.</p></div></section>
+<footer>StreamNest is independent and is not affiliated with YouTube or Google. YouTube's player, availability rules, branding and terms still apply.</footer>
+</main></div>
+<script>
+const $=id=>document.getElementById(id);let apiKey='';
+const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch{return []}},write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+function go(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v));document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===v));if(v==='saved')renderSaved();if(v==='history')renderHistory();if(v==='home')renderHome();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
+function videoId(s){s=s.trim();if(/^[\w-]{11}$/.test(s))return s;try{const u=new URL(s),h=u.hostname.toLowerCase().replace(/^www\./,'');if(h==='youtu.be')return u.pathname.split('/').filter(Boolean)[0]||null;if(['youtube.com','m.youtube.com','music.youtube.com','youtube-nocookie.com'].includes(h)){if(u.pathname==='/watch')return u.searchParams.get('v');const p=u.pathname.split('/').filter(Boolean);if(['embed','shorts','live','v'].includes(p[0]))return p[1]||null}}catch{}return null}
+function playlistId(s){s=s.trim();if(/^[\w-]+$/.test(s))return s;try{return new URL(s).searchParams.get('list')}catch{return null}}
+function embed(target,src,title){
+ target.innerHTML='';
+ const f=document.createElement('iframe');
+ f.src=src;
+ f.title=title;
+ f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+ f.referrerPolicy='strict-origin-when-cross-origin';
+ f.allowFullscreen=true;
+ target.append(f);
+}
+function remember(x){let a=read('sn_history').filter(y=>y.id!==x.id);a.unshift({...x,date:Date.now()});write('sn_history',a.slice(0,30));renderHome()}
+function play(id,title='YouTube video',channel=''){embed($('mainPlayer'),'https://www.youtube.com/embed/'+encodeURIComponent(id)+'?playsinline=1&rel=0','YouTube video player');$('watchStatus').textContent='Loaded: '+title+'. Press Play in the player.';$('openYoutubeLink').href='https://www.youtube.com/watch?v='+id;$('openYoutube').classList.remove('hidden');$('videoUrl').value='https://www.youtube.com/watch?v='+id;remember({id,title,channel});go('watch')}
+$('playLink').onclick=()=>{const id=videoId($('videoUrl').value);if(!id){$('watchStatus').textContent='Link not recognized. Copy the URL from YouTube Share and try again.';return}play(id)};
+$('videoUrl').addEventListener('keydown',e=>{if(e.key==='Enter')$('playLink').click()});
+$('playPlaylist').onclick=()=>{const id=playlistId($('playlistUrl').value);if(!id){$('playlistStatus').textContent='Playlist ID not found. Check the link.';return}embed($('playlistPlayer'),'https://www.youtube.com/embed/videoseries?list='+encodeURIComponent(id)+'&playsinline=1&rel=0','YouTube playlist');$('playlistStatus').textContent='Playlist loaded. Press Play in the player.'};
+function makeCard(x){const c=document.createElement('article');c.className='video-card';const im=document.createElement('img');im.className='thumb';im.alt='';im.loading='lazy';im.src=x.thumb||'https://i.ytimg.com/vi/'+x.id+'/hqdefault.jpg';const d=document.createElement('div');d.className='video-info';const t=document.createElement('div');t.className='video-title';t.textContent=x.title||'YouTube video';const ch=document.createElement('div');ch.className='video-channel';ch.textContent=x.channel||'';const a=document.createElement('div');a.className='card-actions';const w=document.createElement('button');w.className='primary';w.textContent='▶ Watch';w.onclick=()=>play(x.id,x.title,x.channel);const s=document.createElement('button');s.textContent=read('sn_saved').some(y=>y.id===x.id)?'♥ Saved':'♡ Save';s.onclick=()=>toggle(x,s);a.append(w,s);d.append(t,ch,a);c.append(im,d);return c}
+function fill(id,items,msg){const e=$(id);e.innerHTML='';if(!items.length){e.innerHTML='<div class="empty">'+msg+'</div>';return}items.forEach(x=>e.append(makeCard(x)))}
+function toggle(x,b){let a=read('sn_saved');if(a.some(y=>y.id===x.id))a=a.filter(y=>y.id!==x.id);else a.unshift(x);write('sn_saved',a);if(b)b.textContent=a.some(y=>y.id===x.id)?'♥ Saved':'♡ Save';renderSaved()}
+function renderSaved(){fill('savedGrid',read('sn_saved'),'No saved videos yet. Play a video or add one from search, then press Save.')}
+function renderHistory(){fill('historyGrid',read('sn_history'),'No watch history yet.')}
+function renderHome(){fill('homeHistory',read('sn_history').slice(0,4),'Your recently watched videos will appear here.')}
+$('clearHistory').onclick=()=>{if(confirm('Clear StreamNest watch history in this browser?')){write('sn_history',[]);renderHistory();renderHome()}};
+function search(q){q=q.trim();if(!q)return;go('search');$('searchQuery').value=q;searchNoKey(q);}
+$('globalSearch').onsubmit=e=>{e.preventDefault();const q=$('globalQuery').value;if(!q.trim())return;search(q)};
+$('doSearch').onclick=()=>search($('searchQuery').value);
+$('searchQuery').addEventListener('keydown',e=>{if(e.key==='Enter')search($('searchQuery').value)});
+document.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>{$('globalQuery').value=b.dataset.topic;$('searchQuery').value=b.dataset.topic;go('search');search(b.dataset.topic)});
+const searchInstances=[
+ 'https://inv.nadeko.net',
+ 'https://invidious.nerdvpn.de',
+ 'https://yt.chocolatemoo53.com',
+ 'https://invidious.tiekoetter.com'
+];
+async function searchNoKey(q){
+ $('searchStatus').textContent='Searching with community-run video search servers…';
+ $('searchResults').innerHTML='<div class="empty">Searching…</div>';
+ let lastError='No search server responded.';
+ for(const base of searchInstances){
+  try{
+   const controller=new AbortController();
+   const timer=setTimeout(()=>controller.abort(),9000);
+   const url=base+'/api/v1/search?'+new URLSearchParams({q,type:'video',sort_by:'relevance'});
+   const response=await fetch(url,{signal:controller.signal,headers:{'Accept':'application/json'}});
+   clearTimeout(timer);
+   if(!response.ok)throw Error('HTTP '+response.status);
+   const data=await response.json();
+   if(!Array.isArray(data))throw Error('Unexpected search response');
+   const items=data.filter(x=>x.type==='video'&&x.videoId).slice(0,24).map(x=>({
+    id:x.videoId,
+    title:x.title||'YouTube video',
+    channel:x.author||'',
+    thumb:(x.videoThumbnails||[]).find(t=>t.quality==='medium')?.url||(x.videoThumbnails||[])[0]?.url||''
+   }));
+   if(!items.length)throw Error('No video results returned');
+   fill('searchResults',items,'No matching videos found.');
+   $('searchStatus').textContent='Found '+items.length+' videos. Select Watch to play inside StreamNest. Search provider: '+new URL(base).hostname+'.';
+   return;
+  }catch(e){lastError=e.message||'Connection failed';}
+ }
+ $('searchStatus').textContent='The no-key search servers could not be reached from this browser. This can happen when public servers are offline or block browser requests. You can still paste a YouTube video link under Watch a link.';
+ $('searchResults').innerHTML='<div class="empty">No search server is available right now.<br><br><button class="primary" id="retrySearch">Try again</button></div>';
+ const retry=$('retrySearch');if(retry)retry.onclick=()=>searchNoKey(q);
+}
+$('retrySettings').onclick=()=>{go('search');$('searchQuery').value='test';searchNoKey('test');};
+renderHome();
+</script></body></html>
